@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Editar Registro</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+<div class="container py-5">
+  <h2 class="mb-4">Editar Registro de Ruleta</h2>
+
+  <form id="formEditar" method="POST" action="/admin/editar/<%= registro.id %>">
+    <div class="mb-3">
+      <label for="user_id" class="form-label">Usuario</label>
+      <select class="form-select" name="user_id" required>
+        <% usuarios.forEach(u => { %>
+          <option value="<%= u.id %>" <%= u.id === registro.user_id ? 'selected' : '' %>><%= u.nombre %></option>
+        <% }) %>
+      </select>
+    </div>
+
+    <div class="mb-3">
+      <label for="premio_id" class="form-label">Premio</label>
+      <select class="form-select" name="premio_id" required>
+        <% premios.forEach(p => { %>
+          <option value="<%= p.id %>" <%= p.id === registro.premio_id ? 'selected' : '' %>><%= p.nombre %></option>
+        <% }) %>
+      </select>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Fecha Ganado</label>
+      <input type="datetime-local" name="fecha_ganado" class="form-control" value="<%= new Date(registro.fecha_ganado).toISOString().slice(0,16) %>" required>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Fecha Caducidad</label>
+      <input type="datetime-local" name="fecha_caducidad" class="form-control" value="<%= new Date(registro.fecha_caducidad).toISOString().slice(0,16) %>" required>
+    </div>
+
+    <button type="submit" class="btn btn-success">Guardar Cambios</button>
+    <a href="/admin" class="btn btn-secondary ms-2">Cancelar</a>
+  </form>
+</div>
+
+</body>
+</html>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+  const form = document.getElementById('formEditar');
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    Swal.fire({
+      title: '¿Guardar cambios?',
+      text: 'Se actualizará la información del registro',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Sí, guardar',
+      cancelButtonText: 'Cancelar',
+      confirmButtonColor: '#28a745',
+      cancelButtonColor: '#6c757d'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        form.submit();
+      }
+    });
+  });
+</script>
