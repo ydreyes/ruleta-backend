@@ -9,10 +9,13 @@ const app = express();
 const apiRoutes = require('./routes/api');
 const dashboardRoutes = require('./routes/dashboard');
 
-app.use(cors({ 
-    origin: ['https://ruleta-app-seven.vercel.app'], // reemplaza con tu URL real de Vercel
-    credentials: true
- }));
+// Configurar CORS
+const corsOptions = {
+  origin: ['https://ruleta-app-seven.vercel.app'], // aquí va la URL de tu frontend en Vercel
+  credentials: true
+};
+
+app.use(cors(corsOptions));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(session({ secret: 'secretKey', resave: false, saveUninitialized: true }));
