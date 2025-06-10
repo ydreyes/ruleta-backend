@@ -9,7 +9,10 @@ const app = express();
 const apiRoutes = require('./routes/api');
 const dashboardRoutes = require('./routes/dashboard');
 
-app.use(cors());
+app.use(cors({ 
+    origin: ['https://ruleta-app-seven.vercel.app'], // reemplaza con tu URL real de Vercel
+    credentials: true
+ }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(session({ secret: 'secretKey', resave: false, saveUninitialized: true }));
